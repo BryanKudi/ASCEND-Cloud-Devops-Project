@@ -22,12 +22,14 @@ type RegisterBody =
 export type { CreateTaskBody, LoginBody, RegisterBody };
 
 export class ApiError extends Error {
-  constructor(
-    public status: number,
-    message: string,
-  ) {
+  // Declared and assigned explicitly rather than as a constructor parameter
+  // property — tsconfig sets erasableSyntaxOnly, which disallows those.
+  status: number;
+
+  constructor(status: number, message: string) {
     super(message);
     this.name = "ApiError";
+    this.status = status;
   }
 }
 

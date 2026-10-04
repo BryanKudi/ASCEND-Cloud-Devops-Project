@@ -1,29 +1,9 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { TASKS } from "../tasks";
 import "./HomePage.css";
 
-const suggestions = [
-  { icon: "⚡", label: "Deploy a VM", prompt: "Deploy a new virtual machine" },
-  { icon: "🤖", label: "Run ML Job", prompt: "Run a machine learning training job" },
-  { icon: "☁️", label: "Upload Files", prompt: "Upload files to cloud storage" },
-  { icon: "📊", label: "Monitor Usage", prompt: "Show my cloud resource usage" },
-];
-
 export default function HomePage() {
-  const [input, setInput] = useState("");
   const navigate = useNavigate();
-
-  function handleSuggestion(prompt: string) {
-    setInput(prompt);
-  }
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!input.trim()) return;
-    // Placeholder: route to dashboard or job submission
-    alert(`Submitting task: "${input}"\n\n(Dashboard coming soon!)`);
-    setInput("");
-  }
 
   return (
     <div className="home-root">
@@ -31,32 +11,24 @@ export default function HomePage() {
       <nav className="home-nav">
         <span className="home-logo">ASCEND</span>
         <div className="home-nav-right">
-          <button
-            className="nav-link-btn"
-            onClick={() => navigate("/dashboard")}
-          >
+          <button className="nav-link-btn" onClick={() => navigate("/dashboard")}>
             Dashboard
           </button>
           <button
             className="nav-link-btn"
             onClick={() => navigate("/marketplace")}
           >
-            Marketplace
+            Task Catalog
           </button>
-          <button
-            className="nav-link-btn"
-            onClick={() => navigate("/jobs")}
-          >
-            Jobs
+          <button className="nav-link-btn" onClick={() => navigate("/jobs")}>
+            My Jobs
           </button>
-          <button
-            className="nav-link-btn"
-            onClick={() => navigate("/tutorial")}
-          >
+          <button className="nav-link-btn" onClick={() => navigate("/tutorial")}>
             Tutorial
           </button>
-          <button className="nav-link-btn">Docs</button>
-          <button className="nav-cta" onClick={() => navigate("/login")}>Get Started</button>
+          <button className="nav-cta" onClick={() => navigate("/login")}>
+            Get Started
+          </button>
         </div>
       </nav>
 
@@ -64,44 +36,29 @@ export default function HomePage() {
       <main className="home-main">
         <div className="home-center">
           <div className="home-icon">☁️</div>
-          <h1 className="home-heading">What would you like to run today?</h1>
+          <h1 className="home-heading">Media processing in the cloud</h1>
           <p className="home-subheading">
-            Submit a cloud task or pick a quick action below
+            Upload a file, pick a task, and let it run. Results are stored and
+            ready to download when the job finishes.
           </p>
 
-          {/* Suggestion cards */}
+          {/* The real task list — each card opens the form preselected. */}
           <div className="suggestion-grid">
-            {suggestions.map((s) => (
+            {TASKS.map((task) => (
               <button
-                key={s.label}
+                key={task.id}
                 className="suggestion-card"
-                onClick={() => handleSuggestion(s.prompt)}
+                onClick={() => navigate(`/dashboard?task=${task.id}`)}
               >
-                <span className="suggestion-icon">{s.icon}</span>
-                <span className="suggestion-label">{s.label}</span>
+                <span className="suggestion-icon">{task.icon}</span>
+                <span className="suggestion-label">{task.label}</span>
               </button>
             ))}
           </div>
 
-          {/* Input box */}
-          <form className="home-input-wrap" onSubmit={handleSubmit}>
-            <input
-              className="home-input"
-              type="text"
-              placeholder="Describe your cloud task..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              autoFocus
-            />
-            <button
-              type="submit"
-              className="home-send-btn"
-              disabled={!input.trim()}
-              aria-label="Submit"
-            >
-              ➤
-            </button>
-          </form>
+          <button className="home-primary-cta" onClick={() => navigate("/login")}>
+            Get started →
+          </button>
 
           <p className="home-hint">
             New to ASCEND?{" "}
@@ -118,7 +75,9 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="home-footer">
         <span>© 2026 ASCEND Cloud</span>
-        <span>99.9% Uptime · 3 Regions · 24/7 Monitoring</span>
+        <button className="home-hint-link" onClick={() => navigate("/tutorial")}>
+          How it works
+        </button>
       </footer>
     </div>
   );

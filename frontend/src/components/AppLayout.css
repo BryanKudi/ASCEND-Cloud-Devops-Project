@@ -1,0 +1,376 @@
+/* Shared chrome + primitives for the signed-in pages.
+ *
+ * These rules used to live in pages/DashboardPage.css, which Marketplace and
+ * Jobs relied on being loaded as an import side-effect — so landing directly
+ * on /jobs could render unstyled. They belong to the layout, so they live with
+ * it and each page imports only its own extras. */
+
+/* ─── Layout ─────────────────────────────────────────────── */
+.dash-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.10), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(129, 140, 248, 0.08), transparent 40%),
+    #0f172a;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ─── Nav ─────────────────────────────────────────────────── */
+.dash-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 5%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dash-logo {
+  font-size: 22px;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.dash-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dash-username {
+  font-size: 14px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.dash-logout {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+}
+
+.dash-logout:hover {
+  border-color: #f87171;
+  color: #f87171;
+}
+
+/* ─── Body (sidebar + main wrapper) ──────────────────────── */
+.dash-body {
+  display: flex;
+  flex: 1;
+}
+
+/* ─── Sidebar ─────────────────────────────────────────────── */
+.dash-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  padding: 28px 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dash-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dash-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background 0.18s, color 0.18s;
+}
+
+.dash-sidebar-item:hover {
+  background: rgba(56, 189, 248, 0.07);
+  color: #e2e8f0;
+}
+
+.dash-sidebar-item.active {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+}
+
+.dash-sidebar-icon {
+  font-size: 17px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ─── Main ────────────────────────────────────────────────── */
+.dash-main {
+  flex: 1;
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 36px 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─── Card ────────────────────────────────────────────────── */
+.dash-card {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 28px;
+}
+
+.dash-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin: 0 0 20px;
+}
+
+/* Card header with a title on the left and an action/link on the right. */
+.dash-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.dash-card-header .dash-section-title {
+  margin: 0;
+}
+
+.dash-link-btn {
+  background: none;
+  border: none;
+  color: #38bdf8;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.dash-link-btn:hover {
+  text-decoration: underline;
+}
+
+/* ─── Table ───────────────────────────────────────────────── */
+/* Wrapper so narrow screens scroll the table instead of hiding its last
+ * column — the old rule hid it, which on /jobs meant hiding the download and
+ * delete buttons entirely. */
+.dash-table-wrap {
+  overflow-x: auto;
+}
+
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.dash-table th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  padding: 0 12px 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dash-table td {
+  padding: 14px 12px 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+}
+
+.dash-table tr:last-child td {
+  border-bottom: none;
+}
+
+.dash-file {
+  font-weight: 600;
+  color: #e2e8f0 !important;
+}
+
+.dash-date {
+  color: #475569 !important;
+  font-size: 13px;
+}
+
+.dash-empty {
+  color: #475569;
+  font-size: 14px;
+  text-align: center;
+  padding: 24px 0;
+  margin: 0;
+}
+
+/* ─── Row actions ─────────────────────────────────────────── */
+.dash-view-result {
+  background: none;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.18s, opacity 0.18s;
+}
+
+.dash-view-result:hover:not(:disabled) {
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.dash-view-result:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dash-delete-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+}
+
+.dash-delete-btn:hover:not(:disabled) {
+  border-color: #f87171;
+  color: #f87171;
+}
+
+.dash-delete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dash-row-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ─── Notices ─────────────────────────────────────────────── */
+/* Replaces the window.alert() calls the pages used for all feedback. */
+.dash-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  border: 1px solid transparent;
+}
+
+.dash-notice-success {
+  background: rgba(52, 211, 153, 0.1);
+  border-color: rgba(52, 211, 153, 0.3);
+  color: #34d399;
+}
+
+.dash-notice-error {
+  background: rgba(248, 113, 113, 0.1);
+  border-color: rgba(248, 113, 113, 0.3);
+  color: #f87171;
+}
+
+.dash-notice-info {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.25);
+  color: #7dd3fc;
+}
+
+/* ─── Status badges ───────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.badge-pending {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+}
+
+.badge-running {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+}
+
+.badge-complete {
+  background: rgba(52, 211, 153, 0.12);
+  color: #34d399;
+}
+
+.badge-failed {
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .dash-body {
+    flex-direction: column;
+  }
+
+  .dash-sidebar {
+    width: 100%;
+    padding: 12px 5%;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .dash-sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .dash-sidebar-item {
+    flex: 0 1 auto;
+    padding: 8px 12px;
+    font-size: 13px;
+    justify-content: center;
+  }
+}

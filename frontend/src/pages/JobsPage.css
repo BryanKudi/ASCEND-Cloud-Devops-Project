@@ -46,10 +46,10 @@
 }
 
 .jobs-table th:nth-child(1) { width: 110px; }
-.jobs-table th:nth-child(2) { width: 28%; }
+.jobs-table th:nth-child(2) { width: 22%; }
 .jobs-table th:nth-child(3) { width: 28%; }
 .jobs-table th:nth-child(4) { width: 110px; }
-.jobs-table th:nth-child(5) { width: 110px; }
+.jobs-table th:nth-child(5) { width: 180px; }
 
 .jobs-job-name {
   font-size: 14px;
@@ -62,6 +62,7 @@
 }
 
 /* ─── Download button ─────────────────────────────────────── */
+/* A <button> now, not an <a href="#"> — it fetches a presigned URL first. */
 .jobs-download-btn {
   display: inline-block;
   background: rgba(52, 211, 153, 0.1);
@@ -74,24 +75,18 @@
   padding: 5px 12px;
   text-decoration: none;
   white-space: nowrap;
+  cursor: pointer;
   transition: background 0.18s, border-color 0.18s;
 }
 
-.jobs-download-btn:hover {
+.jobs-download-btn:hover:not(:disabled) {
   background: rgba(52, 211, 153, 0.18);
   border-color: #34d399;
 }
 
-/* ─── Failed badge ────────────────────────────────────────── */
-.badge-failed {
-  background: rgba(248, 113, 113, 0.12);
-  color: #f87171;
-}
-
-/* ─── Queued badge ────────────────────────────────────────── */
-.badge-queued {
-  background: rgba(148, 163, 184, 0.1);
-  color: #94a3b8;
+.jobs-download-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ─── Empty state ─────────────────────────────────────────── */
@@ -151,13 +146,9 @@
     align-items: flex-start;
   }
 
-  .jobs-table th:nth-child(3),
-  .jobs-table td:nth-child(3) {
-    display: none;
-  }
-
-  .jobs-table th:nth-child(4),
-  .jobs-table td:nth-child(4) {
-    display: none;
+  /* Give the table a fixed min-width and let .dash-table-wrap scroll it,
+   * rather than hiding columns (which used to hide the actions too). */
+  .jobs-table {
+    min-width: 620px;
   }
 }

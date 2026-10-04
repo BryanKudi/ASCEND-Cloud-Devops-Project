@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { TASKS } from "../tasks";
 import "./TutorialPage.css";
 
 interface Step {
@@ -14,6 +15,11 @@ interface Chapter {
   steps: Step[];
 }
 
+// Walks through the flow the app actually supports. The previous version
+// documented a different product — ML training prompts, VM deploys, a Cloud
+// Storage tab and a Monitoring tab, none of which exist — so every chapter
+// here maps to a real screen. The task list is rendered from TASKS so it can't
+// drift from the dashboard picker.
 const chapters: Chapter[] = [
   {
     id: "getting-started",
@@ -25,18 +31,22 @@ const chapters: Chapter[] = [
         content: (
           <>
             <p>
-              ASCEND is a cloud-based task execution marketplace. It lets you
-              run compute-intensive jobs — machine learning, data processing,
-              rendering — without managing any infrastructure.
+              ASCEND is a cloud media-processing service. You upload an image or
+              video, choose what you want done to it, and a worker in the cloud
+              processes the file and hands back the result.
             </p>
             <div className="info-box">
-              <strong>Key benefits:</strong>
+              <strong>How it works:</strong>
               <ul>
-                <li>No server setup — just submit a task and go</li>
-                <li>Auto-scaling compute that matches your workload</li>
-                <li>Pay only for what you use</li>
+                <li>Your file is uploaded to private cloud storage</li>
+                <li>The job is queued and picked up by a processing worker</li>
+                <li>The finished file is stored and available to download</li>
               </ul>
             </div>
+            <p>
+              Jobs run in the background, so you can leave the page and check
+              back later — nothing is lost if you close the tab.
+            </p>
           </>
         ),
       },
@@ -45,14 +55,14 @@ const chapters: Chapter[] = [
         content: (
           <>
             <p>
-              Click <strong>Get Started</strong> on the homepage to create a
-              free account. You'll need an email address and a password.
+              Click <strong>Get Started</strong> on the homepage to register with
+              a username and password, or sign in if you already have an account.
             </p>
             <div className="step-callout">
               <span className="callout-icon">💡</span>
               <span>
-                Free accounts include <strong>10 compute hours</strong> per
-                month and <strong>5 GB</strong> of cloud storage.
+                Your uploads and results are private to your account — every job
+                is scoped to the user who submitted it.
               </span>
             </div>
           </>
@@ -61,77 +71,99 @@ const chapters: Chapter[] = [
     ],
   },
   {
-    id: "submit-task",
+    id: "submit-job",
     icon: "⚡",
-    title: "Submit a Task",
+    title: "Submit a Job",
     steps: [
       {
-        title: "Describe your task",
+        title: "Choose a task",
         content: (
           <>
             <p>
-              From the homepage, type what you want to run in the input bar. Be
-              as specific as possible.
+              On the <strong>Dashboard</strong>, pick a task from the dropdown.
+              These are the tasks available today:
             </p>
-            <div className="code-block">
-              <span className="code-label">Example prompt</span>
-              <code>
-                Train a ResNet-50 model on my dataset.csv with 50 epochs
-              </code>
+            <div className="action-list">
+              {TASKS.map((task) => (
+                <div className="action-item" key={task.id}>
+                  <span>{task.icon}</span>
+                  <div>
+                    <strong>{task.label}</strong> — {task.description}
+                  </div>
+                </div>
+              ))}
             </div>
             <p>
-              ASCEND will automatically select the right compute type (CPU, GPU,
-              or TPU) based on your task.
+              The <strong>Task Catalog</strong> shows the same list as cards —
+              clicking one opens the dashboard with that task already selected.
             </p>
           </>
         ),
       },
       {
-        title: "Use quick actions",
+        title: "Upload your file",
         content: (
           <>
             <p>
-              Not sure what to type? Click one of the <strong>quick action cards</strong>{" "}
-              on the homepage:
+              Drag a file onto the upload area, or click it to open a file
+              picker. The accepted file types depend on the task you picked —
+              image tasks only take images.
             </p>
-            <div className="action-list">
-              <div className="action-item">
-                <span>⚡</span>
-                <div>
-                  <strong>Deploy a VM</strong> — spin up a virtual machine in
-                  seconds
-                </div>
-              </div>
-              <div className="action-item">
-                <span>🤖</span>
-                <div>
-                  <strong>Run ML Job</strong> — submit a training or inference
-                  job
-                </div>
-              </div>
-              <div className="action-item">
-                <span>☁️</span>
-                <div>
-                  <strong>Upload Files</strong> — store data in cloud storage
-                </div>
-              </div>
-              <div className="action-item">
-                <span>📊</span>
-                <div>
-                  <strong>Monitor Usage</strong> — check your resource metrics
-                </div>
-              </div>
+            <div className="step-callout">
+              <span className="callout-icon">💡</span>
+              <span>
+                Supported formats are <strong>jpg, png, webp</strong> for images
+                and <strong>mp4, mov, avi, webm</strong> for video.
+              </span>
             </div>
           </>
         ),
       },
+      {
+        title: "Set the task options",
+        content: (
+          <>
+            <p>
+              Some tasks need a little more detail, which appears under the
+              upload area once you've chosen a task:
+            </p>
+            <div className="info-box">
+              <ul>
+                <li>
+                  <strong>Image Resize</strong> — the width and height in pixels
+                </li>
+                <li>
+                  <strong>Format Converter</strong> — the format to convert to.
+                  The source format is read from your file automatically, and
+                  only compatible targets are offered: images convert to images,
+                  video to video.
+                </li>
+                <li>
+                  <strong>Deblur</strong> — no options needed
+                </li>
+              </ul>
+            </div>
+            <p>
+              Press <strong>Submit Job</strong> and it goes into the queue.
+            </p>
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: "results",
+    icon: "📦",
+    title: "Track & Download",
+    steps: [
       {
         title: "Track your job",
         content: (
           <>
             <p>
-              After submitting, you're taken to the <strong>Job Dashboard</strong>.
-              Each job shows:
+              Submitted jobs appear under <strong>Recent Jobs</strong> on the
+              dashboard, and in full under <strong>My Jobs</strong>. Each job
+              carries one of four statuses:
             </p>
             <div className="status-grid">
               <div className="status-pill pending">● Queued</div>
@@ -140,106 +172,33 @@ const chapters: Chapter[] = [
               <div className="status-pill error">● Failed</div>
             </div>
             <p>
-              You'll receive a notification when your job finishes. Results and
-              logs are available for 30 days.
+              <strong>Queued</strong> means the job is waiting for a worker;{" "}
+              <strong>Running</strong> means it's being processed. Refresh the
+              page to see the latest status.
             </p>
           </>
         ),
       },
-    ],
-  },
-  {
-    id: "cloud-storage",
-    icon: "☁️",
-    title: "Cloud Storage",
-    steps: [
       {
-        title: "Upload files",
+        title: "Download your result",
         content: (
           <>
             <p>
-              Navigate to <strong>Storage</strong> in the dashboard sidebar.
-              Drag and drop files or click <strong>Upload</strong>.
-            </p>
-            <div className="info-box">
-              <strong>Supported file types:</strong> CSV, JSON, Parquet, PNG,
-              JPG, ZIP, tar.gz, and most common formats. Max single file: 10 GB.
-            </div>
-          </>
-        ),
-      },
-      {
-        title: "Reference files in tasks",
-        content: (
-          <>
-            <p>
-              Once uploaded, each file gets a unique path you can reference in
-              your tasks:
-            </p>
-            <div className="code-block">
-              <span className="code-label">File path</span>
-              <code>ascend://storage/your-username/dataset.csv</code>
-            </div>
-          </>
-        ),
-      },
-    ],
-  },
-  {
-    id: "monitoring",
-    icon: "📊",
-    title: "Monitoring",
-    steps: [
-      {
-        title: "View resource metrics",
-        content: (
-          <>
-            <p>
-              The <strong>Monitoring</strong> tab shows real-time usage across
-              all your resources:
-            </p>
-            <div className="metric-demo">
-              <div className="metric-row">
-                <span>CPU Usage</span>
-                <div className="demo-bar">
-                  <div className="demo-fill" style={{ width: "42%", background: "#38bdf8" }} />
-                </div>
-                <span>42%</span>
-              </div>
-              <div className="metric-row">
-                <span>Storage</span>
-                <div className="demo-bar">
-                  <div className="demo-fill" style={{ width: "68%", background: "#818cf8" }} />
-                </div>
-                <span>68%</span>
-              </div>
-              <div className="metric-row">
-                <span>Network</span>
-                <div className="demo-bar">
-                  <div className="demo-fill" style={{ width: "30%", background: "#22c55e" }} />
-                </div>
-                <span>1.8 GB/s</span>
-              </div>
-            </div>
-          </>
-        ),
-      },
-      {
-        title: "Set up alerts",
-        content: (
-          <>
-            <p>
-              Go to <strong>Settings → Alerts</strong> to create threshold
-              alerts. You'll be notified by email or webhook when a metric
-              exceeds your limit.
+              Once a job is <strong>Complete</strong>, use the{" "}
+              <strong>Download</strong> button on the My Jobs page (or{" "}
+              <strong>View</strong> on the dashboard) to open the finished file.
             </p>
             <div className="step-callout">
-              <span className="callout-icon">⚠️</span>
+              <span className="callout-icon">💡</span>
               <span>
-                Recommended: set a <strong>budget alert</strong> to avoid
-                unexpected charges.
+                Download links are generated on demand and expire after 24
+                hours. Come back to My Jobs for a fresh one any time.
               </span>
             </div>
+            <p>
+              Deleting a job from My Jobs also removes the uploaded file and the
+              result from storage, so only do it when you've saved what you need.
+            </p>
           </>
         ),
       },
@@ -295,7 +254,6 @@ export default function TutorialPage() {
           ← Home
         </button>
         <span className="tut-nav-title">ASCEND Tutorial Guide</span>
-        <span className="tut-nav-version">v1.0</span>
       </nav>
 
       <div className="tut-layout">
@@ -358,9 +316,9 @@ export default function TutorialPage() {
             {isLast ? (
               <button
                 className="tut-btn primary"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/dashboard")}
               >
-                Finish & Go Home ✓
+                Go to Dashboard ✓
               </button>
             ) : (
               <button className="tut-btn primary" onClick={goNext}>
