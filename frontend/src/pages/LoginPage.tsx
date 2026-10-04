@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api, ApiError } from "../api";
 import "./LoginPage.css";
 
 export default function LoginPage() {
@@ -22,26 +23,22 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      const endpoint = mode === "login" ? "/auth/login" : "/auth/register";
-      const res = await fetch(`http://localhost:8000${endpoint}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      // Goes through api.ts so VITE_API_BASE is respected — this used to
+      // hardcode http://localhost:8000, which broke any deployed build.
+      const creds = { username, password };
+      const data = (await (mode === "login"
+        ? api.login(creds)
+        : api.register(creds))) as { token: string; username: string };
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.detail || "Something went wrong.");
-        return;
-      }
-
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("username", data.username);
-    navigate("/dashboard");
-
-    } catch {
-      setError("Could not reach the server. Is the backend running?");
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.username);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(
+        err instanceof ApiError
+          ? err.message
+          : "Could not reach the server. Is the backend running?",
+      );
     } finally {
       setLoading(false);
     }

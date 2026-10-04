@@ -49,14 +49,6 @@
   color: #e2e8f0;
 }
 
-.tut-nav-version {
-  font-size: 12px;
-  color: #475569;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 3px 8px;
-  border-radius: 6px;
-}
-
 /* ─── Layout ──────────────────────────────────────────────── */
 .tut-layout {
   display: flex;
@@ -256,33 +248,6 @@
   margin-top: 1px;
 }
 
-/* Code block */
-.code-block {
-  background: #0a0f1e;
-  border: 1px solid #1e293b;
-  border-radius: 10px;
-  padding: 16px 20px;
-  margin: 16px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.code-label {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #475569;
-}
-
-.code-block code {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
-  color: #38bdf8;
-  word-break: break-all;
-}
-
 /* Action list */
 .action-list {
   display: flex;
@@ -345,48 +310,6 @@
   background: rgba(239, 68, 68, 0.1);
   color: #ef4444;
   border: 1px solid rgba(239, 68, 68, 0.25);
-}
-
-/* Metric demo */
-.metric-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin: 16px 0;
-}
-
-.metric-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 14px;
-  color: #94a3b8;
-}
-
-.metric-row span:first-child {
-  width: 90px;
-  flex-shrink: 0;
-}
-
-.metric-row span:last-child {
-  width: 60px;
-  flex-shrink: 0;
-  text-align: right;
-  color: white;
-  font-weight: 600;
-}
-
-.demo-bar {
-  flex: 1;
-  height: 8px;
-  background: #1e293b;
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.demo-fill {
-  height: 100%;
-  border-radius: 999px;
 }
 
 /* ─── Nav buttons ─────────────────────────────────────────── */

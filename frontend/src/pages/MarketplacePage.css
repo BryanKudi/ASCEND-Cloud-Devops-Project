@@ -1,8 +1,3 @@
-/* ─── Marketplace layout overrides ───────────────────────── */
-.mkt-main {
-  max-width: 1040px !important;
-}
-
 /* ─── Page header ─────────────────────────────────────────── */
 .mkt-header {
   margin-bottom: 8px;
@@ -52,13 +47,13 @@
   position: absolute;
   inset: 0;
   border-radius: 18px;
-  background: radial-gradient(circle at 0% 0%, var(--card-accent, #38bdf8) 0%, transparent 65%);
+  background: radial-gradient(circle at 0% 0%, #38bdf8 0%, transparent 65%);
   opacity: 0;
   transition: opacity 0.22s;
 }
 
 .mkt-card:hover {
-  border-color: var(--card-accent, #38bdf8);
+  border-color: #38bdf8;
   background: rgba(30, 41, 59, 0.95);
   transform: translateY(-2px);
 }
@@ -112,16 +107,16 @@
   position: relative;
 }
 
-.mkt-card-time {
+.mkt-card-accepts {
   font-size: 12px;
   font-weight: 600;
   color: #475569;
 }
 
-.mkt-card-price {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--card-accent, #38bdf8);
+.mkt-card-cta {
+  font-size: 12px;
+  font-weight: 700;
+  color: #38bdf8;
 }
 
 /* ─── Responsive ──────────────────────────────────────────── */

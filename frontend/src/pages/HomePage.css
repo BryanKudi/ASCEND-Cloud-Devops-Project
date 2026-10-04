@@ -113,7 +113,7 @@
 /* ─── Suggestion cards ────────────────────────────────────── */
 .suggestion-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   width: 100%;
 }
@@ -152,62 +152,24 @@
   text-align: center;
 }
 
-/* ─── Input bar ───────────────────────────────────────────── */
-.home-input-wrap {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  background: rgba(30, 41, 59, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  padding: 6px 6px 6px 20px;
-  gap: 8px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  transition: border-color 0.2s;
-}
-
-.home-input-wrap:focus-within {
-  border-color: #38bdf8;
-}
-
-.home-input {
-  flex: 1;
-  background: none;
-  border: none;
-  outline: none;
-  color: white;
-  font-size: 16px;
-  padding: 10px 0;
-  caret-color: #38bdf8;
-}
-
-.home-input::placeholder {
-  color: #475569;
-}
-
-.home-send-btn {
+/* ─── Primary call to action ──────────────────────────────── */
+.home-primary-cta {
   background: #38bdf8;
   border: none;
   color: #0f172a;
-  font-size: 18px;
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 13px 32px;
+  border-radius: 12px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.18s, opacity 0.18s;
-  flex-shrink: 0;
+  transition: background 0.18s, transform 0.15s;
+  box-shadow: 0 4px 24px rgba(56, 189, 248, 0.2);
 }
 
-.home-send-btn:hover:not(:disabled) {
+.home-primary-cta:hover {
   background: #7dd3fc;
-}
-
-.home-send-btn:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
+  transform: translateY(-1px);
 }
 
 /* ─── Hint link ───────────────────────────────────────────── */
@@ -267,7 +229,7 @@
 
 @media (max-width: 420px) {
   .suggestion-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   .home-nav {
